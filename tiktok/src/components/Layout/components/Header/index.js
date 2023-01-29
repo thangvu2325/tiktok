@@ -9,12 +9,10 @@ import 'tippy.js/dist/tippy.css';
 import {
     faCircleXmark,
     faSpinner,
-    faMagnifyingGlass,
     faEllipsisVertical,
     faEarthAsia,
     faCircleQuestion,
     faKeyboard,
-    faCloudUpload,
     faCoins,
     faGear,
     faUser,
@@ -28,6 +26,8 @@ import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountItem from '~/components/AccountItem';
 import Button from '~/components/Button';
 import Menu from '~/components/Popper/Menu';
+import { SearchIcon, UploadIcon } from '~/components/Icons';
+import Image from '~/components/Image';
 const cx = className.bind(styles);
 const handleMenuChange = (menuItem) => {
     switch (menuItem.type) {
@@ -119,7 +119,7 @@ function Header() {
                         <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />
 
                         <button className={cx('search-btn')}>
-                            <FontAwesomeIcon icon={faMagnifyingGlass} />
+                            <SearchIcon />
                         </button>
                     </div>
                 </HeadlessTippy>
@@ -128,7 +128,7 @@ function Header() {
                         <>
                             <Tippy delay={(0, 200)} content="Upload Video">
                                 <button className={cx('action-btn')}>
-                                    <FontAwesomeIcon icon={faCloudUpload} />
+                                    <UploadIcon />
                                 </button>
                             </Tippy>
                         </>
@@ -140,10 +140,11 @@ function Header() {
                     )}
                     <Menu items={currentUser ? userMenu : MENU_ITEM} onChange={handleMenuChange}>
                         {currentUser ? (
-                            <img
+                            <Image
                                 src="https://64.media.tumblr.com/0720d562319a714c020710344ed67383/84bd6032ff13f728-fa/s1280x1920/085d228f71280869ce592e242cc1173c4a7c225f.jpg"
                                 className={cx('user-avatar')}
                                 alt="Nguyen Van A"
+                                fallBack="https://scontent.fsgn2-8.fna.fbcdn.net/v/t1.30497-1/143086968_2856368904622192_1959732218791162458_n.png?stp=cp0_dst-png_p60x60&_nc_cat=1&ccb=1-7&_nc_sid=7206a8&_nc_ohc=E70viSc53w0AX8GYSY7&_nc_ht=scontent.fsgn2-8.fna&oh=00_AfD2dw7Et-gbPGBMYZTT12RlM223MEMvX0QErMevYJpl6w&oe=63FE15F8"
                             />
                         ) : (
                             <button className={cx('more-btn')}>
