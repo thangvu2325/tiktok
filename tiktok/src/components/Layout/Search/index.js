@@ -1,14 +1,16 @@
-import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState, useRef } from 'react';
-import { Wrapper as PopperWrapper } from '~/components/Popper';
+import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import AccountItem from '~/components/AccountItem';
 import HeadlessTippy from '@tippyjs/react/headless';
-import { SearchIcon } from '~/components/Icons';
 import className from 'classnames/bind';
+
+// component
+import * as searchServices from '~/api-services/searchServices';
+import AccountItem from '~/components/AccountItem';
+import { Wrapper as PopperWrapper } from '~/components/Popper';
+import { SearchIcon } from '~/components/Icons';
 import styles from './Search.module.scss';
 import { useDebounce } from '~/hook';
-
 const cx = className.bind(styles);
 
 function Search() {
@@ -23,16 +25,29 @@ function Search() {
             setSearchResult([]);
             return;
         }
-        setLoading(true);
-        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debounced)}&type=less`)
-            .then((res) => res.json())
-            .then((res) => {
-                setSearchResult(res.data);
-                setLoading(false);
-            })
-            .catch(() => {
-                setLoading(false);
-            });
+
+        // Asyn await
+        const fetchApi = async () => {
+            setLoading(true);
+            const result = await searchServices.search(debounced);
+            setSearchResult(result);
+            setLoading(false);
+        };
+        fetchApi();
+        // request
+        //     .get(`users/search`, {
+        //         params: {
+        //             q: debounced,
+        //             type: 'less',
+        //         },
+        //     })
+        //     .then((res) => {
+        //         setSearchResult(res.data);
+        //         setLoading(false);
+        //     })
+        //     .catch(() => {
+        //         setLoading(false);
+        //     });
     }, [debounced]);
     const handleClear = () => {
         setSearchValue('');
