@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import 'tippy.js/dist/tippy.css';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
-import Search from '~/components/Layout/Search';
+import Search from '~/layouts/Search';
 import {
     faEllipsisVertical,
     faEarthAsia,
@@ -15,10 +15,12 @@ import {
     faUser,
     faSignOut,
 } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 //component
 import styles from './Header.module.scss';
 import images from '~/assets/images';
+import config from '~/config';
 
 import Button from '~/components/Button';
 import Menu from '~/components/Popper/Menu';
@@ -85,9 +87,9 @@ function Header() {
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
-                <div className={cx('logo')}>
+                <Link to={config.routes.home} className={cx('logo-link')}>
                     <img src={images.logo} alt="tiktok" />
-                </div>
+                </Link>
                 <Search />
                 <div className={cx('actions')}>
                     {currentUser ? (
@@ -115,7 +117,7 @@ function Header() {
                             <Button primary>Log in</Button>
                         </>
                     )}
-                    <Menu items={currentUser ? userMenu : MENU_ITEM} onChange={handleMenuChange}>
+                    <Menu items={currentUser ? userMenu : MENU_ITEM} onChange={handleMenuChange} hideOnClick={false}>
                         {currentUser ? (
                             <Image
                                 src="https://64.media.tumblr.com/0720d562319a714c020710344ed67383/84bd6032ff13f728-fa/s1280x1920/085d228f71280869ce592e242cc1173c4a7c225f.jpg"
